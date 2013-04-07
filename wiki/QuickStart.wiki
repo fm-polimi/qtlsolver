@@ -1,5 +1,17 @@
 #summary Quick start
 
+
+= Installing =
+
+*qtlsolver* requires 
+
+  * antlr3.5 libraries (you can download antlr-3.5-complete.jar from http://www.antlr3.org/download.html)
+
+  * Zot toolkit that you can find at http://code.google.com/p/zot/
+    * Zot requires Z3 SMT-solver (4.0 better)
+
+
+
 = Example =
 
 Here you can find a simple example of a QTL formula producing a square signal 'p'.
@@ -16,3 +28,6 @@ Here you can find a simple example of a QTL formula producing a square signal 'p
 :formula (&& ax3 (&& ax1 ax2))
 }}}
 
+Save it in a .tl file (e.g., wave.tl) and run `qtlsolver wave.tl --sat`. 
+
+At the end you will get either *sat* or *unsat* and file `dic.txt` where the list of formulae involved is written. In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL formula.
