@@ -30,4 +30,4 @@ Here you can find a simple example of a QTL formula producing a square signal 'p
 
 Save it in a .tl file (e.g., wave.tl) and run `qtlsolver wave.tl --sat`. 
 
-At the end you will get either *sat* or *unsat* and file `dic.txt` where the list of formulae involved is written. In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL formula.
+You will get either *sat* or *unsat* and file `dict.txt` where the formulae involved are listed. In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL formula.
