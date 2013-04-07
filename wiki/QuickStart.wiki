@@ -1,4 +1,4 @@
-#summary Quick start
+#summary The fastest way to use qtlsover
 
 
 = Installing =
