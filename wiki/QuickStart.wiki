@@ -1,0 +1,18 @@
+#summary Quick start
+
+= Example =
+
+Here you can find a simple example of a QTL formula producing a square signal 'p'.
+
+
+{{{
+:qtl
+:bound 10
+
+:def ax1 (G_e+ 0 (-> p (F_ee 0 2 (G_ee 0 1 (!! p)))))
+:def ax2 (G_e+ 0 (-> (!! p) (F_ee 0 2 (G_ee 0 1 p))))
+:def ax3 (G_ie 0 1 p)
+
+:formula (&& ax3 (&& ax1 ax2))
+}}}
+
