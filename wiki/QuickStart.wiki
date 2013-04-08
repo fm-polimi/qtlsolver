@@ -8,7 +8,11 @@
   * antlr3.5 libraries (you can download antlr-3.5-complete.jar from http://www.antlr3.org/download.html)
 
   * Zot toolkit that you can find at http://code.google.com/p/zot/
-    * Zot requires Z3 SMT-solver (4.0 better)
+    * Zot requires a Common Lisp interpreter (e.g., sbcl) and Z3 SMT-solver (4.0 better)
+
+
+
+* Remark:* antlr3.5 library is already included in qtlsolver.jar (Downloads section).
 
 
 
@@ -28,9 +32,9 @@ Here you can find a simple example of a QTL formula producing a square signal 'p
 :formula (&& ax3 (&& ax1 ax2))
 }}}
 
-Save it in a .tl file (e.g., wave.tl) and run `qtlsolver wave.tl --sat`. 
+Save it in a .tl file (e.g., wave.tl) and run `java -jar qtlsolver.jar wave.tl --sat`. 
 
-You will get sat*,
+You will get
 
   * file `dict.txt` where the formulae involved are listed and
 
