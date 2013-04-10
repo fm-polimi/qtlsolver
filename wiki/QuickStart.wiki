@@ -9,6 +9,7 @@
 
   * Zot toolkit that you can find at http://code.google.com/p/zot/
     * Zot requires a Common Lisp interpreter (e.g., sbcl) and Z3 SMT-solver (4.0 better)
+    * Zot is supposed to be "system-wide" and runnuble by `zot' command line 
 
 
 
