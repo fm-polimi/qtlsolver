@@ -1,0 +1,14 @@
+#summary Some nice examples showing the functionality of the tool
+
+= Squared signal =
+
+{{{
+:qtl
+:bound 10
+
+:def ax1 (G_i+ 0 (-> (G_ee 0 1 p) (G_ee 1 2 (!! p))))
+:def ax2 (G_e+ 0 (-> (G_ee 0 1 (!! p)) (G_ee 1 2 p)))
+:def ax3 (G_ee 0 1 p)
+
+:formula (&& ax3 (&& ax2 ax1))
+}}} 
