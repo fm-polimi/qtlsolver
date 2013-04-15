@@ -90,4 +90,4 @@ Z0_0 = 0.0
 ...
 }}}
 
-Observe that the first instant of the timeline (the origin) corresponds to instant 1.
+Observe that the first instant of the timeline (the origin) corresponds to instant 1. `delta` is the variable measuring the time elapsing between two discrete positions. In the example, position 2 occurs 1.0 time unit after position 1. Variables `z0_1` and `z0_1` are clocks associated with formula 0.
