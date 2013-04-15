@@ -90,4 +90,4 @@ Z0_0 = 0.0
 ...
 }}}
 
-Observe that the first instant of the timeline (the origin) correspond to instant 1.
+Observe that the first instant of the timeline (the origin) corresponds to instant 1.
