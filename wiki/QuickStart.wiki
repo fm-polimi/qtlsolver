@@ -45,3 +45,49 @@ You will get
 In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL formula.
 The `.cltl` file is always provided.
 If `--sat` is omitted, the dictionary file and `filename.cltl` are produced but SMT resolution is not performed.
+
+
+= How to understand the result = 
+So far, qtlsolver is not endowed with a back parser interpreting the output. However, the output can be easily understood by checking the `output.hist.txt` file which is created after the resolution when the formula is satisfiable.
+You can implement a simple bash script like 
+
+
+{{{
+#!/bin/bash
+egrep -e "H_$1|L_$1|SUP_$1|SDW_$1|------|LOOP|DELTA|LO_$1|LC_$1|Z0_$1|Z1_$1" output.hist.txt
+}}}
+
+filtering out the formula numbered by $1.
+You can discover your interested formulae in the file `dict.txt` where each formula comes with its number.
+If you want to get the history of the formula 0 you just run
+
+{{{
+./filter.sh 0
+}}}
+
+and get an history like the following one:
+
+{{{
+------ time 1 ------
+Z1_0 = 0.00005
+  LO_0
+DELTA = 1.0
+  H_0
+Z0_0 = 0.0
+------ time 2 ------
+Z1_0 = 0.0
+  LO_0
+DELTA = 1.0
+Z0_0 = 1.0
+  L_0
+------ time 3 ------
+Z1_0 = 1.0
+DELTA = 1.0
+  H_0
+Z0_0 = 0.0
+  LC_0
+------ time 4 ------
+...
+}}}
+
+Observe that the first instant of the timeline (the origin) correspond to instant 1.
