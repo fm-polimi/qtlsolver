@@ -22,6 +22,7 @@ An interested sample producing a squared signal where edges are not constrained 
 
 The following formula is unsat because it is satisfible only over non finitely variable signals.
 
+{{{
 :qtl
 :bound 10
 
@@ -29,3 +30,5 @@ The following formula is unsat because it is satisfible only over non finitely v
 :def ax2 (G_e+ 0 (|| (S p p) (S (!! p) (!! p))))
 
 :formula (!! (&& ax1 ax2))
+
+}}}
