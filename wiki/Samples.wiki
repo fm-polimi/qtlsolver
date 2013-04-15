@@ -18,7 +18,7 @@ An interested sample producing a squared signal where edges are not constrained 
 
 
 
-= Finitely variability =
+= Finite variability =
 
 The following formula is unsat because it is satisfible only over non finitely variable signals.
 
