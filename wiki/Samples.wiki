@@ -2,6 +2,9 @@
 
 = Squared signal =
 
+An interested sample producing a squared signal where edges are not constrained to be left-closed nor left-open.
+
+
 {{{
 :qtl
 :bound 10
@@ -12,3 +15,17 @@
 
 :formula (&& ax3 (&& ax2 ax1))
 }}} 
+
+
+
+= Finitely variability =
+
+The following formula is unsat because it is satisfible only over non finitely variable signals.
+
+:qtl
+:bound 10
+
+:def ax1 (G_e+ 0 (|| (U p p) (U (!! p) (!! p))))
+:def ax2 (G_e+ 0 (|| (S p p) (S (!! p) (!! p))))
+
+:formula (!! (&& ax1 ax2))
