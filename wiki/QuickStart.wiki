@@ -95,16 +95,16 @@ Observe that the first instant of the timeline (the origin) corresponds to insta
 The meaning of symbols you see in the history is:
    * `H_i`: a _becames true_ event for formula `i`
    * `L_i`: a _becames false_ event for formula `i`
-   * `SWU_i`: a _true singularity_ event (spike) for formula `i`
-   * `SWD_i`: a _false singularity_ event for formula `i`
+   * `SWU_i`: a _true singularity_ event (positive spike) for formula `i`
+   * `SWD_i`: a _false singularity_ event (negative spike) for formula `i`.
 
 
 Currently, qtlSolver supports two different encoding of QTL (or MITL). 
 QTL has been translated by using both an event-based and an interval-based representation. 
-You can use:
+You can use the:
 
-   * event-based by means of the key `:qtl-i`
-   * interval-based by means of the key `:qtl`
+   * *event-based* encoding by means of the key `:qtl-i`
+   * *nterval-based* encoding by means of the key `:qtl`.
 
 The interval-based translation produces a more succint and compact reduction. Therefore, it should produce better performances.
 This translation uses a different set of symbols, that are:
