@@ -9,7 +9,7 @@
 
   * Zot toolkit that you can find at http://code.google.com/p/zot/
     * Zot requires a Common Lisp interpreter (e.g., sbcl) and Z3 SMT-solver (4.0 better)
-    * Zot is supposed to be "system-wide" and runnuble by `zot' command line 
+    * Zot is supposed to be "system-wide" and runnuble by `zot` command. 
 
 
 
@@ -100,11 +100,11 @@ The meaning of symbols you see in the history is:
 
 
 Currently, qtlSolver supports two different encoding of QTL (or MITL). 
-QTL has been translated by using both an event-based and an interval-based representation. 
+QTL has been translated by using an event-based or an interval-based representation. 
 You can use the:
 
    * *event-based* encoding by means of the key `:qtl-i`
-   * *nterval-based* encoding by means of the key `:qtl`.
+   * *interval-based* encoding by means of the key `:qtl`.
 
 The interval-based translation produces a more succint and compact reduction. Therefore, it should produce better performances.
 This translation uses a different set of symbols, that are:
@@ -122,3 +122,12 @@ To get results from `output.hist.txt` you have to modify the script interpreting
 egrep -e "H_$1|P_$1|------|LOOP|DELTA|Z0_$1|Z1_$1" output.hist.txt
 }}}
 
+As QTL, MITL is translated by both the representation. So, you can choose one of the two by the key `:mitl-i` and `:mitl`.
+
+
+= Direct encoding of metric modalities =
+Although QTL is theoretically equivalent to MITL, we use two different keys to choose whether to translate the metric modalities `F_<a,b>` and `G_<a,b>` with a direct encoding instead of their equivalent formulae which are defined by a nesting of elemental formulae `F_(0,b)` and `G_(0,b)`.
+
+
+= Past modalities =
+QTL is endowed with past modalities. So, you can write formulae including P_<a,b> (eventually in the Past) and H_<a,b> (Historically in the past).
