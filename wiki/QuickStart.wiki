@@ -126,7 +126,7 @@ As QTL, MITL is translated by both the representation. So, you can choose one of
 
 
 = Direct encoding of metric modalities =
-Although QTL is theoretically equivalent to MITL, we use two different keys to choose whether to translate the metric modalities `F_<a,b>` and `G_<a,b>` with a direct encoding instead of their equivalent formulae which are defined by a nesting of elemental formulae `F_(0,b)` and `G_(0,b)`.
+Although QTL is theoretically equivalent to MITL, we use the different keys `:qtl-` and `mitl-` to choose whether to translate the metric modalities `F_<a,b>` and `G_<a,b>` with a direct encoding instead of their equivalent formulae which are defined by a nesting of elemental formulae `F_(0,b)` and `G_(0,b)`.
 
 
 = Past modalities =
