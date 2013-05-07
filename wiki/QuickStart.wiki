@@ -90,4 +90,35 @@ Z0_0 = 0.0
 ...
 }}}
 
-Observe that the first instant of the timeline (the origin) corresponds to instant 1. `delta` is the variable measuring the time elapsing between two discrete positions. In the example, position 2 occurs 1.0 time unit after position 1. Variables `z0_0` and `z0_1` are clocks associated with formula 0.
+Observe that the first instant of the timeline (the origin) corresponds to instant 1. `delta` is the variable measuring the time elapsing between two discrete positions. In the example, position 2 occurs 1.0 time unit after position 1. Variables `z0_0` and `z0_1` are clocks associated with formula 0 measuring time elapsing among events involving formula 1.
+
+The meaning of symbols you see in the history is:
+   * `H_i`: a _becames true_ event for formula `i`
+   * `L_i`: a _becames false_ event for formula `i`
+   * `SWU_i`: a _true singularity_ event (spike) for formula `i`
+   * `SWD_i`: a _false singularity_ event for formula `i`
+
+
+Currently, qtlSolver supports two different encoding of QTL (or MITL). 
+QTL has been translated by using both an event-based and an interval-based representation. 
+You can use:
+
+   * event-based by means of the key `:qtl-i`
+   * interval-based by means of the key `:qtl`
+
+The interval-based translation produces a more succint and compact reduction. Therefore, it should produce better performances.
+This translation uses a different set of symbols, that are:
+
+   * `H_i`: formula `i` holds in the current interval
+   * `P_i`: formula `i` holds in the first instant of the current interval.
+
+If only `H_i` holds then the interval where formula `i` holds is _left-open_ while if both `H_i` and `P_i` hold the interval is _left-closed_.
+
+
+To get results from `output.hist.txt` you have to modify the script interpreting the file as follows:
+
+{{{
+#!/bin/bash
+egrep -e "H_$1|P_$1|------|LOOP|DELTA|Z0_$1|Z1_$1" output.hist.txt
+}}}
+
