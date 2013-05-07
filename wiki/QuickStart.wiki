@@ -130,4 +130,4 @@ Although QTL is theoretically equivalent to MITL, we use the different keys `:qt
 
 
 = Past modalities =
-QTL is endowed with past modalities. So, you can write formulae including P_<a,b> (eventually in the Past) and H_<a,b> (Historically in the past).
+QTL is endowed with past modalities. So, you can write formulae including P_<a,b>, i.e., eventually in the Past, and H_<a,b>, i.e., Historically in the past.
