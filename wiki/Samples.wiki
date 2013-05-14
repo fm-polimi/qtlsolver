@@ -35,7 +35,7 @@ The following formula is unsat because it is satisfible only over non finitely v
 
 
 = Timed Lamp =
-The following formula represents the behaviour of a lamp controlled by two buttons, labeled ON and OFF respectively, which cannot be pressed simultaneously. The lamp itself can be either on or off. When ON is pressed the lamp is immediately turned on, regardless of its current state, while if OFF is pushed then the lamp is immediately turned off, also regardless of its current state. However, to save energy there is also a timeout: after ON is pressed, the lamp will not stay on forever, but, if no more buttons are pressed, it will automatically turndoff with a delay `delta`, a positive real constant. Notice that, from this definition, it follows that by pressing the ON button before the timeout expiration then the timeout is extended by a new delay `delta`.
+The following formula represents the behaviour of a lamp controlled by two buttons, labeled ON and OFF respectively, which cannot be pressed simultaneously. The lamp itself can be either on or off. When ON is pressed the lamp is immediately turned on, regardless of its current state, while if OFF is pushed then the lamp is immediately turned off, also regardless of its current state. However, to save energy there is also a timeout: after ON is pressed, the lamp will not stay on forever, but, if no more buttons are pressed, it will automatically turned off with a delay `delta=5`, a positive real constant. Notice that, from this definition, it follows that by pressing the ON button before the timeout expiration then the timeout is extended by a new delay `delta=5`.
 
 {{{
 :qtl-i
@@ -50,3 +50,30 @@ The following formula represents the behaviour of a lamp controlled by two butto
 :formula (&& punton1 puntoff1 lighton1 mutex1)
 }}}
 
+Since we are handling unrestricted signals, we can even force `on` to hold only in
+isolated instants by adding QTL constraint (similarly for off) `punton1`.
+
+You can prove the following nice properties by adding the negated version in the formula.
+
+{{{
+* (G_e+ 0 (F_ii 0 5 (!! l)))
+* (-> (F_e+ 0 (G_ii 0 5 l)) (F_e+ 0 (&& on (F_ei 0 5 on)))) 
+}}}
+
+
+= Spikes = 
+A nice behaviour over singularities.
+
+{{{
+:qtl-i
+:bound 10
+
+:def ax1 (G_i+ 0 (-> (G_ee 0 80 (!! p)) (G_ee 80 160 (!! p))))
+:def ax2 (G_i+ 0 (-> p (F_ee 0 160 p)))
+:def init1 (&& (G_ee 0 80 (!! p)) p)
+:def ax3 (G_e+ 0 (-> p (P_ee 0 80 q)))
+:def ax4 (G_i+ 0 (-> q (U (!! q) true)))
+
+
+:formula (&& init1 ax1 ax2 ax3 ax4)
+}}}
