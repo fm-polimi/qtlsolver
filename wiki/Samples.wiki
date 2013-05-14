@@ -32,3 +32,21 @@ The following formula is unsat because it is satisfible only over non finitely v
 :formula (!! (&& ax1 ax2))
 
 }}}
+
+
+= Timed Lamp =
+The following formula represents the behaviour of a lamp controlled by two buttons, labeled ON and OFF respectively, which cannot be pressed simultaneously. The lamp itself can be either on or off. When ON is pressed the lamp is immediately turned on, regardless of its current state, while if OFF is pushed then the lamp is immediately turned off, also regardless of its current state. However, to save energy there is also a timeout: after ON is pressed, the lamp will not stay on forever, but, if no more buttons are pressed, it will automatically turndoff with a delay `delta`, a positive real constant. Notice that, from this definition, it follows that by pressing the ON button before the timeout expiration then the timeout is extended by a new delay `delta`.
+
+{{{
+:qtl-i
+:bound 20
+
+:def punton1 (G_i+ 0 (&& (!! (U on true)) (!! (S on true))))
+:def puntoff1 (G_i+ 0 (&& (!! (U off true)) (!! (S off true))))
+:def lighton1 (G_i+ 0 (<-> l (&& (S (!! off) on) (P_ee 0 5 on))))
+:def mutex1 (G_i+ 0 (-> on (!! off)))
+
+
+:formula (&& punton1 puntoff1 lighton1 mutex1)
+}}}
+
