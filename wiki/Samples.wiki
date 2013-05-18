@@ -77,3 +77,21 @@ A nice behaviour over singularities.
 
 :formula (&& init1 ax1 ax2 ax3 ax4)
 }}}
+
+= Aperiodic spikes =
+The following formula represents the behavior of two signals `p` and `q` both occurring in singular manner. Signal `p` is a _tick_ of th system as it occurs regularly every 100 time units. Signal `q` must occur close to `p` within 1 time unit and two occurrences of it are forced to be 100 times units far each other (formula `axqaper11`).
+
+{{{
+:qtl-i
+:bound 30
+
+:def init11 (&& (G_ee 0 100 (!! p)) p)
+:def axp11 (G_i+ 0 (-> (G_ee 0 100 (!! p)) (G_ee 100 200 (!! p))))
+:def axp22 (G_i+ 0 (-> p (F_ee 0 200 p)))
+:def axpq11 (G_e+ 0 (-> p (|| (P_ee 0 1 q) (F_ee 0 1 q))))
+:def axqaper11 (G_i+ 0 (-> q (G_ei 0 100 (!! q))))
+
+:formula (&& init11 axp11 axp22 axpq11 axqaper11)
+}}}
+
+This formula is satisfiable only over models where *clock values* are strictly *aperiodic* while the sequence of clock regions induced by the values is periodic.
