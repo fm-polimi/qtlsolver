@@ -91,6 +91,7 @@ The following formula represents the behavior of two signals `p` and `q` both oc
 :def axpq11 (G_e+ 0 (-> p (|| (P_ee 0 1 q) (F_ee 0 1 q))))
 :def axqaper11 (G_i+ 0 (-> q (G_ei 0 100 (!! q))))
 
+
 :formula (&& init11 axp11 axp22 axpq11 axqaper11)
 }}}
 
