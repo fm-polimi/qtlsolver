@@ -15,7 +15,6 @@ declaration: ':def' ID NEWLINE
 
         
 fmla:   ID		
-    |   ATOM  
     |   '(' '!!' fmla ')' 
     |   '(' '&&' fmla fmla ')'
     |   '(' '||' fmla fmla ')'
@@ -46,15 +45,17 @@ RELEASE_OP: 'R'
 TRIGGER_OP: 'T'
 
 
-LOGIC  :   'qtl'|'mitl' 
+LOGIC  :   'qtl'|'mitl|qtl-i|mitl-i' 
 
 
 COLON: ':'
 SEMI: ';'
 ATOM  :   ('a'..'z')+ 
 INT :   '0'..'9'+ 
+
 ID:  ATOM(ATOM | INT)*
+
 NEWLINE:'\r'? '\n' 
 WS  :   (' '|'\t')+ 
-
+COMMENT: '#'~('\r' | '\n')*
 }}}
