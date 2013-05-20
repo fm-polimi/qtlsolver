@@ -19,7 +19,7 @@
 
 = Example =
 
-Here you can find a simple example of a QTL formula producing a square signal 'p'.
+Here you can find a simple example of a QTL/MITL formula producing a square signal 'p'.
 
 
 {{{
@@ -42,7 +42,7 @@ You will get
   * file `filename.cltl` containing the translation for each formula appearing in `dict.txt`.
 
 *qtlsolver* produces two output: either sat or unsat. 
-In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL formula.
+In the case of *sat*, `output.hist.smt` contains the bounded model satisfying the QTL/MITL formula.
 The `.cltl` file is always provided.
 If `--sat` is omitted, the dictionary file and `filename.cltl` are produced but SMT resolution is not performed.
 
@@ -130,4 +130,4 @@ Although QTL is theoretically equivalent to MITL, we use the different keys `:qt
 
 
 = Past modalities =
-QTL is endowed with past modalities. So, you can write formulae including `P_<a,b>`, i.e., eventually in the Past, and `H_<a,b>`, i.e., Historically in the past.
+QTL/MITL is endowed with past modalities. So, you can write formulae including `P_<a,b>`, i.e., eventually in the Past, and `H_<a,b>`, i.e., Historically in the past.
