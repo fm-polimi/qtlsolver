@@ -103,8 +103,8 @@ Currently, qtlSolver supports two different encoding of QTL (or MITL).
 QTL has been translated by using an event-based or an interval-based representation. 
 You can use the:
 
-   * *event-based* encoding by means of the key `:qtl-i`
-   * *interval-based* encoding by means of the key `:qtl`.
+   * *event-based* encoding by means of the key `:qtl`
+   * *interval-based* encoding by means of the key `:qtl-i`.
 
 The interval-based translation produces a more succint and compact reduction. Therefore, it should produce better performances.
 This translation uses a different set of symbols, that are:
