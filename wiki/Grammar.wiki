@@ -28,7 +28,7 @@ fmla:   ID
     |   '(' SINCE_OP fmla fmla ')' 
     |   '(' RELEASE_OP fmla fmla ')' 
     |   '(' TRIGGER_OP fmla fmla ')' 
-
+    |   '(' COUNT_OP INT INT fmla ')'
 		
 F_OP:      'F_ee' | 'F_ei' | 'F_ii' | 'F_ie'
 F_inf_OP:  'F_e+' | 'F_i+'
