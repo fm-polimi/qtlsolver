@@ -1,0 +1,130 @@
+# Installing #
+
+**qtlsolver** requires
+
+  * antlr3.5 libraries (you can download antlr-3.5-complete.jar from http://www.antlr3.org/download.html)
+
+  * Zot toolkit that you can find at http://code.google.com/p/zot/
+    * Zot requires a Common Lisp interpreter (e.g., sbcl) and Z3 SMT-solver (4.0 better)
+    * Zot is supposed to be "system-wide" and runnuble by `zot` command.
+
+
+
+**Remark:** antlr3.5 library is already included in qtlsolver.jar (Downloads section).
+
+
+
+# Example #
+
+Here you can find a simple example of a QTL/MITL formula producing a square signal 'p'.
+
+
+```
+:qtl
+:bound 10
+
+:def ax1 (G_e+ 0 (-> p (F_ee 0 2 (G_ee 0 1 (!! p)))))
+:def ax2 (G_e+ 0 (-> (!! p) (F_ee 0 2 (G_ee 0 1 p))))
+:def ax3 (G_ie 0 1 p)
+
+:formula (&& ax3 (&& ax1 ax2))
+```
+
+Save it in a .tl file (e.g., wave.tl) and run `java -jar qtlsolver.jar wave.tl --sat`.
+
+You will get
+
+  * file `dict.txt` where the formulae involved are listed and
+
+  * file `filename.cltl` containing the translation for each formula appearing in `dict.txt`.
+
+**qtlsolver** produces two output: either sat or unsat.
+In the case of **sat**, `output.hist.smt` contains the bounded model satisfying the QTL/MITL formula.
+The `.cltl` file is always provided.
+If `--sat` is omitted, the dictionary file and `filename.cltl` are produced but SMT resolution is not performed.
+
+
+# How to understand the result #
+So far, qtlsolver is not endowed with a back parser interpreting the output. However, the output can be easily understood by checking the `output.hist.txt` file which is created after the resolution when the formula is satisfiable.
+You can implement a simple bash script like
+
+
+```
+#!/bin/bash
+egrep -e "H_$1|L_$1|SUP_$1|SDW_$1|------|LOOP|DELTA|LO_$1|LC_$1|Z0_$1|Z1_$1" output.hist.txt
+```
+
+filtering out the formula numbered by $1.
+You can discover your interested formulae in the file `dict.txt` where each formula comes with its number.
+If you want to get the history of the formula 0 you just run
+
+```
+./filter.sh 0
+```
+
+and get an history like the following one:
+
+```
+------ time 1 ------
+Z1_0 = 0.00005
+  LO_0
+DELTA = 1.0
+  H_0
+Z0_0 = 0.0
+------ time 2 ------
+Z1_0 = 0.0
+  LO_0
+DELTA = 1.0
+Z0_0 = 1.0
+  L_0
+------ time 3 ------
+Z1_0 = 1.0
+DELTA = 1.0
+  H_0
+Z0_0 = 0.0
+  LC_0
+------ time 4 ------
+...
+```
+
+Observe that the first instant of the timeline (the origin) corresponds to instant 1. `delta` is the variable measuring the time elapsing between two discrete positions. In the example, position 2 occurs 1.0 time unit after position 1. Variables `z0_0` and `z0_1` are clocks associated with formula 0 measuring time elapsing among events involving formula 1.
+
+The meaning of symbols you see in the history is:
+  * `H_i`: a _becames true_ event for formula `i`
+  * `L_i`: a _becames false_ event for formula `i`
+  * `SWU_i`: a _true singularity_ event (positive spike) for formula `i`
+  * `SWD_i`: a _false singularity_ event (negative spike) for formula `i`.
+
+
+Currently, qtlSolver supports two different encoding of QTL (or MITL).
+QTL has been translated by using an event-based or an interval-based representation.
+You can use the:
+
+  * **event-based** encoding by means of the key `:qtl`
+  * **interval-based** encoding by means of the key `:qtl-i`.
+
+The interval-based translation produces a more succint and compact reduction. Therefore, it should produce better performances.
+This translation uses a different set of symbols, that are:
+
+  * `H_i`: formula `i` holds in the current interval
+  * `P_i`: formula `i` holds in the first instant of the current interval.
+
+If only `H_i` holds then the interval where formula `i` holds is _left-open_ while if both `H_i` and `P_i` hold the interval is _left-closed_.
+
+
+To get results from `output.hist.txt` you have to modify the script interpreting the file as follows:
+
+```
+#!/bin/bash
+egrep -e "H_$1|P_$1|------|LOOP|DELTA|Z0_$1|Z1_$1" output.hist.txt
+```
+
+As QTL, MITL is translated by both the representation. So, you can choose one of the two by the key `:mitl-i` and `:mitl`.
+
+
+# Direct encoding of metric modalities #
+Although QTL is theoretically equivalent to MITL, we use the different keys `:qtl-` and `mitl-` to choose whether to translate the metric modalities `F_<a,b>` and `G_<a,b>` with a direct encoding instead of their equivalent formulae which are defined by a nesting of elemental formulae `F_(0,b)` and `G_(0,b)`.
+
+
+# Past modalities #
+QTL/MITL is endowed with past modalities. So, you can write formulae including `P_<a,b>`, i.e., eventually in the Past, and `H_<a,b>`, i.e., Historically in the past.

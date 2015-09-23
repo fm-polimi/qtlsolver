@@ -1,0 +1,58 @@
+# Grammar of qtlsolver scripts #
+qtlparser: logic NEWLINE
+	   ':bound' INT NEWLINE
+	   declaration*
+	   ':formula' fmla NEWLINE	
+
+logic : COLON LOGIC
+				
+declaration: ':def' ID NEWLINE
+	   | NEWLINE
+
+        
+fmla:   ID		
+    |   '(' '!!' fmla ')' 
+    |   '(' '&&' fmla fmla ')'
+    |   '(' '||' fmla fmla ')'
+    |   '(' '->' fmla fmla ')'
+    |   '(' '<->' fmla fmla ')'
+    |   '(' F_OP INT INT fmla ')' 
+    |   '(' F_inf_OP INT fmla ')' 
+    |   '(' G_OP INT INT fmla ')' 
+    |   '(' G_inf_OP INT fmla ')' 
+    |   '(' UNTIL_OP fmla fmla ')' 
+    |   '(' SINCE_OP fmla fmla ')' 
+    |   '(' RELEASE_OP fmla fmla ')' 
+    |   '(' TRIGGER_OP fmla fmla ')' 
+    |   '(' COUNT_OP INT INT fmla ')'
+		
+F_OP:      'F_ee' | 'F_ei' | 'F_ii' | 'F_ie'
+F_inf_OP:  'F_e+' | 'F_i+'
+
+G_OP: 	   'G_ee' | 'G_ei' | 'G_ii' | 'G_ie'
+G_inf_OP:  'G_e+' | 'G_i+'
+
+
+P_OP:       'P'
+H_OP:       'H'
+UNTIL_OP:   'U'
+SINCE_OP:   'S'
+RELEASE_OP: 'R'
+TRIGGER_OP: 'T'
+
+
+COUNT_OP: 'C'
+
+
+LOGIC  :   'qtl'|'mitl'|'qtl-i'|'mitl-i'
+
+COLON: ':'
+SEMI: ';'
+INT : ('0'..'9')+ 
+fragment ATOM: 'a'..'z'
+
+ID:  ATOM(ATOM | INT | '_')*
+
+NEWLINE:'\r'? '\n' 
+WS  :   (' '|'\t')+ 
+COMMENT: '#'~('\r' | '\n')* ```

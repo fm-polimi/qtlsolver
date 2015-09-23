@@ -1,0 +1,117 @@
+# Squared signal #
+
+An interested sample producing a squared signal where edges are not constrained to be left-closed nor left-open.
+
+
+```
+:qtl
+:bound 10
+
+:def ax1 (G_i+ 0 (-> (G_ee 0 1 p) (G_ee 1 2 (!! p))))
+:def ax2 (G_e+ 0 (-> (G_ee 0 1 (!! p)) (G_ee 1 2 p)))
+:def ax3 (G_ee 0 1 p)
+
+:formula (&& ax3 (&& ax2 ax1))
+```
+
+
+
+# Finite variability #
+
+The following formula is unsat because it is satisfible only over non finitely variable signals.
+
+```
+:qtl
+:bound 10
+
+:def ax1 (G_e+ 0 (|| (U p p) (U (!! p) (!! p))))
+:def ax2 (G_e+ 0 (|| (S p p) (S (!! p) (!! p))))
+
+:formula (!! (&& ax1 ax2))
+
+```
+
+
+# Timed Lamp #
+The following formula represents the behaviour of a lamp controlled by two buttons, labeled ON and OFF respectively, which cannot be pressed simultaneously. The lamp itself can be either on or off. When ON is pressed the lamp is immediately turned on, regardless of its current state, while if OFF is pushed then the lamp is immediately turned off, also regardless of its current state. However, to save energy there is also a timeout: after ON is pressed, the lamp will not stay on forever, but, if no more buttons are pressed, it will automatically turned off with a delay `delta=5`, a positive real constant. Notice that, from this definition, it follows that by pressing the ON button before the timeout expiration then the timeout is extended by a new delay `delta=5`.
+
+```
+:qtl-i
+:bound 20
+
+:def punton1 (G_i+ 0 (&& (!! (U on true)) (!! (S on true))))
+:def puntoff1 (G_i+ 0 (&& (!! (U off true)) (!! (S off true))))
+:def lighton1 (G_i+ 0 (<-> l (&& (S (!! off) on) (P_ee 0 5 on))))
+:def mutex1 (G_i+ 0 (-> on (!! off)))
+
+
+:formula (&& punton1 puntoff1 lighton1 mutex1)
+```
+
+Since we are handling unrestricted signals, we can even force `on` to hold only in
+isolated instants by adding QTL constraint (similarly for off) `punton1`.
+
+You can prove the following nice properties by adding the negated version in the formula.
+
+```
+* (G_e+ 0 (F_ii 0 5 (!! l)))
+* (-> (F_e+ 0 (G_ii 0 5 l)) (F_e+ 0 (&& on (F_ei 0 5 on)))) 
+```
+
+
+# Spikes #
+A nice behaviour over singularities.
+
+```
+:qtl-i
+:bound 10
+
+:def ax1 (G_i+ 0 (-> (G_ee 0 80 (!! p)) (G_ee 80 160 (!! p))))
+:def ax2 (G_i+ 0 (-> p (F_ee 0 160 p)))
+:def init1 (&& (G_ee 0 80 (!! p)) p)
+:def ax3 (G_e+ 0 (-> p (P_ee 0 80 q)))
+:def ax4 (G_i+ 0 (-> q (U (!! q) true)))
+
+
+:formula (&& init1 ax1 ax2 ax3 ax4)
+```
+
+# Aperiodic spikes #
+The following formula represents the behavior of two signals `p` and `q` both occurring in singular manner. Signal `p` is a _tick_ of th system as it occurs regularly every 100 time units. Signal `q` must occur close to `p` within 1 time unit and two occurrences of it are forced to be 100 times units far each other (formula `axqaper11`).
+
+```
+:qtl-i
+:bound 30
+
+:def init11 (&& (G_ee 0 100 (!! p)) p)
+:def axp11 (G_i+ 0 (-> (G_ee 0 100 (!! p)) (G_ee 100 200 (!! p))))
+:def axp22 (G_i+ 0 (-> p (F_ee 0 200 p)))
+:def axpq11 (G_e+ 0 (-> p (|| (P_ee 0 1 q) (F_ee 0 1 q))))
+:def axqaper11 (G_i+ 0 (-> q (G_ei 0 100 (!! q))))
+
+
+:formula (&& init11 axp11 axp22 axpq11 axqaper11)
+```
+
+This formula is satisfiable only over models where **clock values** are strictly **aperiodic** while the sequence of clock regions induced by the values is periodic.
+
+
+# Counting Modality #
+The following formula defines the behaviour of two signals `p` and `q` which occur only in singular manner.
+Signal `p` holds in the origin and it occurs periodically every time unit while signal `q` occurs at least once but not more than two times between two `p`.
+
+```
+:qtl-i
+:bound 20
+
+:def ax1_p (G_i+ 0 (-> (G_ee 0 1 (!! p)) (G_ee 1 2 (!! p))))
+:def ax2_p (G_i+ 0 (-> p (F_ee 0 2 p)))
+:def init_p (&& (G_ee 0 1 (!! p)) p)
+
+:def ax_q (G_i+ 0 (-> p (&& (C 1 1 q) (!! (C 2 1 q)))))
+:def spike_q (G_e+ 0 (-> q (U (!! q) true)))
+
+:def q_neverwith_p (G_e+ 0 (-> p (!! q)))
+
+:formula (&& init_p ax1_p ax2_p ax_q q_neverwith_p spike_q)
+```
