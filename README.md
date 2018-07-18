@@ -1,5 +1,5 @@
 # qtlsolver
-Satisfiability solver for QTL, MITL and other continuous-time temporal logics  (previously hosted as qtlsolver.googlecode.com)
+Satisfiability solver for QTL, MITL and other continuous-time temporal logics  (previously hosted https://code.google.com/archive/p/qtlsolver/)
 
 Given a formula of the Quantitative Temporal Logic (QTL) or its subclasses, like Metric Interval Temporal Logic (MITL), the tool produces an equisatisfiable CLTL-over-clocks formula. The obtained formula can be solved by any CLTL-over-clocks solver (e.g., ae2zot).
 
